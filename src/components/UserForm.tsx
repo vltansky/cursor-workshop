@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import PreferenceList from './PreferenceList';
+import { useSettings } from '../hooks/useSettings';
 
 type FormData = {
   name: string;
@@ -20,6 +21,8 @@ const UserForm = () => {
   // console.log('All form values:', allValues);
 
   const [formValues, setFormValues] = useState<Record<string, string>>({});
+  
+  const settings = useSettings();
 
   const onSubmit = (data: FormData) => {
     console.log('Form submitted:', data);
@@ -138,6 +141,79 @@ const UserForm = () => {
         <p className="text-xs text-gray-600 mt-2">
           Form validation result: {isValid ? '✅ Valid' : '❌ Invalid'}
         </p>
+        <p className="text-xs text-gray-600 mt-1">
+          Settings dirty: {settings.isDirty ? '✅ Dirty' : '❌ Clean'}
+        </p>
+        <div className="mt-2 space-y-1">
+          <p className="text-xs text-gray-600">Settings Theme: {settings.theme}</p>
+          <p className="text-xs text-gray-600">Validation Mode: {settings.validationMode}</p>
+          <p className="text-xs text-gray-600">Auto Save: {settings.autoSave ? 'On' : 'Off'}</p>
+          <p className="text-xs text-gray-600">Advanced: {settings.showAdvanced ? 'Shown' : 'Hidden'}</p>
+        </div>
+      </div>
+
+      <div className="settings-panel p-4 bg-blue-50 border border-blue-200 rounded-lg">
+        <h4 className="font-semibold text-blue-700 mb-2">Form Settings (useSettings Hook Demo)</h4>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-blue-700 mb-1">Theme</label>
+            <select 
+              value={settings.theme} 
+              onChange={(e) => settings.handleThemeChange(e.target.value as any)}
+              className="w-full px-2 py-1 border border-blue-300 rounded text-sm"
+            >
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="auto">Auto</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-blue-700 mb-1">Validation</label>
+            <select 
+              value={settings.validationMode} 
+              onChange={(e) => settings.handleValidationModeChange(e.target.value as any)}
+              className="w-full px-2 py-1 border border-blue-300 rounded text-sm"
+            >
+              <option value="onSubmit">On Submit</option>
+              <option value="onChange">On Change</option>
+              <option value="onBlur">On Blur</option>
+            </select>
+          </div>
+          <div className="flex items-center">
+            <input 
+              type="checkbox" 
+              checked={settings.autoSave} 
+              onChange={(e) => settings.handleAutoSaveChange(e.target.checked)}
+              className="mr-2"
+            />
+            <label className="text-sm text-blue-700">Auto Save</label>
+          </div>
+          <div className="flex items-center">
+            <input 
+              type="checkbox" 
+              checked={settings.showAdvanced} 
+              onChange={(e) => settings.handleAdvancedToggle(e.target.checked)}
+              className="mr-2"
+            />
+            <label className="text-sm text-blue-700">Show Advanced</label>
+          </div>
+        </div>
+        <div className="mt-4 space-x-2">
+          <button 
+            type="button" 
+            onClick={settings.resetForm}
+            className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
+          >
+            Reset Settings
+          </button>
+          <button 
+            type="button" 
+            onClick={settings.handleRemount}
+            className="px-3 py-1 bg-gray-600 text-white rounded text-sm hover:bg-gray-700"
+          >
+            Remount (Key: {settings.remountKey})
+          </button>
+        </div>
       </div>
     </form>
   );
