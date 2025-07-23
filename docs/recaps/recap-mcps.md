@@ -1,4 +1,5 @@
 - playwright
 - context7
 - https://octocode.ai/
+- Grep mcp https://vercel.com/blog/grep-a-million-github-repositories-via-mcp
 - Cursor Chat History MCP https://x.com/vltansky/status/1931249311997698511
