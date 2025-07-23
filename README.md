@@ -1,54 +1,121 @@
-# React + TypeScript + Vite
+# Mastering Cursor Workshop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive workshop for learning advanced Cursor IDE features, custom modes, and AI-powered development workflows.
 
-Currently, two official plugins are available:
+## 🚀 Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/vltansky/cursor-workshop.git
+   cd cursor-workshop
+   ```
 
-## Expanding the ESLint configuration
+2. **Setup environment:**
+   ```bash
+   # Install dependencies
+   npm i
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+   # Ensure Node.js v20+
+   nvm install 20 && nvm alias default 20
+   ```
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
+3. **Start developing:**
+   ```bash
+   npm run dev
+   ```
+
+## 📚 Documentation
+
+### Core Documentation
+- **[User Rules](docs/my-user-rules.md)**
+- **[Tasks](docs/tasks/)** - Workshop exercises and examples
+- **[Recaps](docs/recaps/)** - Session summaries and key learnings
+
+### Custom Modes
+Enhance your Cursor experience with these specialized custom modes:
+
+- **[Plan Mode](docs/custom-mode-prompts/plan.md)** - Strategic planning and analysis mode
+- **[Code Review](docs/custom-mode-prompts/code-review.md)** - Automated code review assistant
+- **[Create Rule](docs/custom-mode-prompts/create-rule.md)** - Generate custom coding rules
+- **[PR Description](docs/custom-mode-prompts/pr-descr.md)** - Auto-generate pull request descriptions
+- **[Parallel Plan](docs/custom-mode-prompts/parallel-plan.md)** - Multi-threaded planning approach
+
+# PRD
+https://docs.google.com/document/d/1FTmd4ZKr-7vpRB15r8ir6XMr2_pLhr8NMxCYZX1jeG8/edit?usp=sharing
+
+## 🔧 MCP (Model Context Protocol) Setup
+
+### Basic Configuration
+`.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "playwright mcp": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    }
+  }
+}
+```
+
+### Multiple MCPs
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
     },
-  },
-})
+    "playwright mcp": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    }
+  }
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Wix-Specific MCP
+```json
+{
+  "mcpServers": {
+    "wix-local-mcp": {
+      "command": "npx",
+      "args": ["-y", "@wix/mcp"]
+    }
+  }
+}
 ```
+
+## 🎯 Workshop Features
+
+### Context Window Playground
+Interactive tool for understanding AI context limits: https://ctxlab.vltansky.com/
+
+## 📖 Additional Resources
+
+### Community & Learning
+- [Presentation Slides](https://mastering-cursor.vltansky.com/)
+- [Cheatsheet](https://docs.google.com/document/d/1hEpyOGcF12Z9VhWPQyM63xj8dIEennradqTEt3fpWo4/edit?tab=t.0#heading=h.l1cpksn6hivr)
+- [Cursor Community Events](https://lu.ma/cursorcommunity)
+- [WhatsApp Israeli Community](https://chat.whatsapp.com/Ld5t0dOi4gT3cYzJ4komXw)
+- [Twitter/X Community](https://x.com/i/communities/1828333497351565520)
+- [Reddit Community](https://www.reddit.com/r/cursor/)
+- [Wix Cursor Security Guidelines](https://docs.google.com/document/d/1TR5OYly0O74HWDasDZlFkRH9O3pZ-0E9E1fp7UHzVSo/edit?tab=t.0#heading=h.tdhyt2cu4eww)
+
+### Tools & Utilities
+- [Smithery.ai - MCP Registry](https://smithery.ai/)
+- [Tokenizer Tool](https://tiktokenizer.vercel.app/)
+- [Task Master AI](https://www.task-master.dev/)
+- [Cursor Directory](https://cursor.directory/)
+- [Awesome Cursor Rules](https://github.com/PatrickJS/awesome-cursorrules/tree/main/rules)
+
+### Official Documentation
+- [Cursor Documentation](https://docs.cursor.com/get-started/welcome)
+- [Vibe Coding Guide](https://github.com/EnzeD/vibe-coding)
+
+## 🤝 Contributing
+
+Help improve this workshop by filling out [feedback survey](https://forms.gle/t8HwySa66i7RFF1a7).
+
+This project is part of the Mastering Cursor workshop

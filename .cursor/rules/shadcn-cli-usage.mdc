@@ -1,7 +1,6 @@
 ---
-description:
-globs:
-alwaysApply: true
+description: shadcn, ui components, add new component
+alwaysApply: false
 ---
 # shadcn Component Integration Guidelines
 
