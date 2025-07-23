@@ -1,0 +1,4 @@
+- playwright
+- context7
+- https://octocode.ai/
+- Cursor Chat History MCP https://x.com/vltansky/status/1931249311997698511
