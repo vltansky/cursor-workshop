@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import PreferenceList from './PreferenceList';
 
@@ -11,6 +11,8 @@ type FormData = {
 const UserForm = () => {
   const { register, handleSubmit, control, formState: { errors } } = useForm<FormData>();
   const [isTyping, setIsTyping] = useState(false);
+  const renderCount = useRef(0);
+  renderCount.current += 1;
 
   // console.log('UserForm rendered', errors);
 
@@ -20,9 +22,8 @@ const UserForm = () => {
   const [formValues, setFormValues] = useState<Record<string, string>>({});
 
   const onSubmit = (data: FormData) => {
-    // console.log('Form submitted:', data);
-    alert('Form submitted!');
-    // console.log('Form submitted:', data);
+    console.log('Form submitted:', data);
+    alert(`Form submitted! Selected ${data.preferences?.length || 0} preferences`);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +42,7 @@ const UserForm = () => {
       result += Math.random();
     }
     const duration = Date.now() - start;
-    // console.log(`Form validation took ${duration}ms`);
+    console.log(`Form validation took ${duration}ms`, { renderCount: renderCount.current });
     return result > 50000;
   };
 
@@ -57,6 +58,9 @@ const UserForm = () => {
               {isTyping ? 'Processing...' : 'Ready'}
             </span>
           </span>
+        </div>
+        <div className="text-sm font-medium text-blue-600">
+          UserForm renders: {renderCount.current}
         </div>
       </div>
 
@@ -108,7 +112,11 @@ const UserForm = () => {
         {errors.email && <p className="error mt-1">{errors.email.message}</p>}
       </div>
 
-      <PreferenceList formValues={formValues} register={register} />
+      <PreferenceList
+        register={register}
+        control={control}
+        allValues={allValues}
+      />
 
       <button
         type="submit"

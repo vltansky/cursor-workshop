@@ -1,13 +1,26 @@
-import { UseFormRegister } from 'react-hook-form';
+import { useRef } from 'react';
+import { UseFormRegister, useWatch, Control } from 'react-hook-form';
 import { Checkbox } from '@/components/ui/checkbox';
 
-type PreferenceListProps = {
-  formValues: Record<string, string>;
-  register: UseFormRegister<any>;
+type FormData = {
+  name: string;
+  email: string;
+  preferences: string[];
 };
 
-const PreferenceList = ({ formValues, register }: PreferenceListProps) => {
-  // console.log('PreferenceList rendered');
+type PreferenceListProps = {
+  register: UseFormRegister<FormData>;
+  control: Control<FormData>;
+  allValues?: unknown;
+};
+
+const PreferenceList = ({ register, control, allValues }: PreferenceListProps) => {
+  const renderCount = useRef(0);
+  renderCount.current += 1;
+  console.log('PreferenceList rendered', {
+    renderCount: renderCount.current,
+    allValues: !!allValues
+  });
   const preferences = [
     'Daily Newsletters', 'Weekly Digest', 'Monthly Summary',
     'Product Announcements', 'Feature Updates', 'Beta Features',
@@ -28,11 +41,22 @@ const PreferenceList = ({ formValues, register }: PreferenceListProps) => {
     return { result, duration };
   };
 
-  const { result: computedValue, duration } = expensiveComputation();
+  const computationResult = expensiveComputation();
+  console.log('PreferenceList expensive computation:', computationResult);
+
+  const selectedPreferences = useWatch({ name: 'preferences', control, defaultValue: [] }) || [];
+  const selectedCount = selectedPreferences.length;
 
   return (
     <div className="preference-list">
-      <h3 className="text-lg font-semibold mb-4">Email Preferences ({preferences.length} options)</h3>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-semibold">
+          Email Preferences ({selectedCount}/{preferences.length} selected)
+        </h3>
+        <div className="text-sm font-medium text-purple-600">
+          PreferenceList renders: {renderCount.current}
+        </div>
+      </div>
 
       <div className="grid grid-cols-2 gap-3 max-h-96 overflow-y-auto p-4 border rounded-lg">
         {preferences.map((pref) => (
@@ -40,7 +64,16 @@ const PreferenceList = ({ formValues, register }: PreferenceListProps) => {
             <Checkbox
               id={pref}
               value={pref}
-              {...register('preferences')}
+              checked={selectedPreferences.includes(pref)}
+              onCheckedChange={(checked) => {
+                const currentValues = selectedPreferences || [];
+                const newValues = checked
+                  ? [...currentValues, pref]
+                  : currentValues.filter((p: string) => p !== pref);
+                register('preferences').onChange({
+                  target: { name: 'preferences', value: newValues }
+                });
+              }}
             />
             <label
               htmlFor={pref}
@@ -54,10 +87,10 @@ const PreferenceList = ({ formValues, register }: PreferenceListProps) => {
 
       <div className="current-values mt-4">
         <h4 className="text-sm font-medium text-gray-600 mb-2">
-          Current form values (from parent):
+          Selected preferences:
         </h4>
         <pre className="text-xs bg-gray-100 p-2 rounded overflow-x-auto">
-          {JSON.stringify(formValues, null, 2)}
+          {JSON.stringify(selectedPreferences, null, 2)}
         </pre>
       </div>
     </div>
