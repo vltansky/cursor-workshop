@@ -1,0 +1,36 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# shadcn Component Integration Guidelines
+
+## Adding New Components
+
+When adding new shadcn components to the project, always use the official shadcn CLI. Never manually copy and paste component code or create components from scratch.
+
+### CLI Commands
+
+1. To add a new component:
+```bash
+npx shadcn@latest add <component-name>
+```
+
+2. For multiple components:
+```bash
+npx shadcn@latest add button card toast
+```
+
+### Important Rules
+
+1. Always check the [components.json](mdc:components.json) for configuration before adding new components
+2. Use the `--path` flag if you need to specify a custom component location
+3. Run the command from the project root directory
+4. After adding components, check for any new dependencies in [package.json](mdc:package.json)
+
+### Best Practices
+
+1. Keep all shadcn components in their designated directory as specified in components.json
+2. Don't modify the core shadcn component code directly - create wrapper components instead
+3. Always commit both the component files and any modified configuration files
+4. Check the official documentation at https://ui.shadcn.com/docs/cli for the latest CLI options
