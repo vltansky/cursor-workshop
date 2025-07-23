@@ -41,7 +41,7 @@ Enhance your Cursor experience with these specialized custom modes:
 - **[Parallel Plan](docs/custom-mode-prompts/parallel-plan.md)** - Multi-threaded planning approach
 
 # PRD
-https://docs.google.com/document/d/1FTmd4ZKr-7vpRB15r8ir6XMr2_pLhr8NMxCYZX1jeG8/edit?usp=sharing
+https://docs.google.com/document/d/1WxTQsX89aZHbvVeMPc3QgB09QykCeDpzFPuSgJRoyaM/edit?usp=sharing
 
 ## 🔧 MCP (Model Context Protocol) Setup
 
